@@ -1,8 +1,8 @@
 import 'dotenv/config';
-import * as Knex from 'knex';
+import { Knex } from 'knex';
 import { knexSnakeCaseMappers } from 'objection';
 
-module.exports = Knex.knex({
+module.exports = {
   client: 'pg',
   //connection: process.env.DATABASE_URL,
   connection: {
@@ -21,4 +21,4 @@ module.exports = Knex.knex({
     stub: process.env.DB_SEEDS_STUB,
   },
   ...knexSnakeCaseMappers(),
-});
+} as Knex.Config;
