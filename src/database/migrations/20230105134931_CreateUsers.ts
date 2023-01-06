@@ -4,8 +4,6 @@ import { ROLES } from '../../core/constants/role.enum';
 
 const tableName = 'users';
 
-//
-
 export async function up(knex: Knex) {
   return knex.schema
     .raw('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"')
@@ -19,7 +17,6 @@ export async function up(knex: Knex) {
       t.string('password').notNullable();
       t.string('name').notNullable();
       t.enum('role', [ROLES.ADMIN, ROLES.USER]).notNullable();
-      t.string('created_by').notNullable();
     });
 }
 

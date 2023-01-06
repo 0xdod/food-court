@@ -10,4 +10,10 @@ export class User extends BaseModel {
   email: string;
   password: string;
   role: ROLES;
+
+  $formatJson(json: any) {
+    json = super.$formatJson(json);
+    delete json.password;
+    return json;
+  }
 }
