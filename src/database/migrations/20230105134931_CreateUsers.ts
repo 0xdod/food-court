@@ -12,6 +12,7 @@ export async function up(knex: Knex) {
     t.string('password').notNullable();
     t.string('name').notNullable();
     t.enum('role', [ROLES.ADMIN, ROLES.USER]).notNullable();
+    t.string('created_by').notNullable();
   });
 }
 
