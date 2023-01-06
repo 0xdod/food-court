@@ -1,6 +1,5 @@
 import { BaseModel } from './base.model';
 import { Brand } from './brand.model';
-import { User } from './user.model';
 
 export class MealAddon extends BaseModel {
   static get tableName() {
@@ -12,10 +11,10 @@ export class MealAddon extends BaseModel {
   description: string;
   category: string;
   brandId: string;
-  createdBy: string;
+  // createdBy: string;
 
   brand: Brand;
-  creator: User;
+  // creator: User;
 
   static get relationMappings() {
     return {
@@ -27,14 +26,14 @@ export class MealAddon extends BaseModel {
           to: 'brands.id',
         },
       },
-      creator: {
-        relation: BaseModel.BelongsToOneRelation,
-        modelClass: User,
-        join: {
-          from: 'meal_addons.createdBy',
-          to: 'users.id',
-        },
-      },
+      // creator: {
+      //   relation: BaseModel.BelongsToOneRelation,
+      //   modelClass: User,
+      //   join: {
+      //     from: 'meal_addons.createdBy',
+      //     to: 'users.id',
+      //   },
+      // },
     };
   }
 }

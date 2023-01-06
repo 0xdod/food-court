@@ -1,64 +1,79 @@
-import { Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseUUIDPipe,
+  Patch,
+  Post,
+} from '@nestjs/common';
+import { BrandService } from './brand.service';
+import { CreateBrandDTO, CreateMealAddonDTO, UpdateMealAddonDTO } from './dtos';
 
 @Controller('brands')
 export class BrandController {
-  //constructor() {}
+  constructor(private readonly brandService: BrandService) {}
+
+  @Post()
+  async createBrand(@Body() createBrandDto: CreateBrandDTO) {
+    return this.brandService.createBrand(createBrandDto);
+  }
+
+  @Get()
+  async getBrands() {
+    return this.brandService.getBrands();
+  }
+
   @Post(':brandId/addons')
-  createMealAddon(@Param('brandId') brandId: string) {
-    return {
+  async createMealAddon(
+    @Param('brandId', new ParseUUIDPipe()) brandId: string,
+    @Body() createMealAddonDto: CreateMealAddonDTO,
+  ) {
+    return this.brandService.createMealAddonForBrand(
       brandId,
-      message: 'Brand addons created',
-    };
+      createMealAddonDto,
+    );
   }
 
   @Get(':brandId/addons')
-  getMealAddons(@Param('brandId') brandId: string) {
-    return [
-      {
-        brandId,
-        message: 'Brand addons fetched',
-      },
-    ];
+  async getMealAddons(@Param('brandId', new ParseUUIDPipe()) brandId: string) {
+    return this.brandService.findAllBrandMealAddons(brandId);
   }
 
   @Get(':brandId/addons/:addonId')
-  getMealAddonById(
-    @Param('brandId') brandId: string,
-    @Param('addonId') addonId: string,
+  async getMealAddonById(
+    @Param('brandId', new ParseUUIDPipe()) brandId: string,
+    @Param('addonId', new ParseUUIDPipe()) addonId: string,
   ) {
-    return {
-      brandId,
-      addonId,
-      message: 'Brand addon fetched',
-    };
+    return this.brandService.findBrandMealAddonById(addonId, brandId);
   }
 
   @Patch(':brandId/addons/:addonId')
-  updateMealAddonById(
-    @Param('brandId') brandId: string,
-    @Param('addonId') addonId: string,
+  async updateMealAddonById(
+    @Param('brandId', new ParseUUIDPipe()) brandId: string,
+    @Param('addonId', new ParseUUIDPipe()) addonId: string,
+    @Body() updateMealAddonDto: UpdateMealAddonDTO,
   ) {
-    return {
-      brandId,
+    return this.brandService.updateBrandMealAddonById(
       addonId,
-      message: 'Brand addon updated',
-    };
+      brandId,
+      updateMealAddonDto,
+    );
   }
 
   @Delete(':brandId/addons/:addonId')
-  deleteMealAddonById(
-    @Param('brandId') brandId: string,
-    @Param('addonId') addonId: string,
+  async deleteMealAddonById(
+    @Param('brandId', new ParseUUIDPipe()) brandId: string,
+    @Param('addonId', new ParseUUIDPipe()) addonId: string,
   ) {
-    return {
-      brandId,
-      addonId,
-      message: 'Brand addon deleted',
-    };
+    return this.deleteMealAddonById(addonId, brandId);
   }
 
   @Post(':brandId/addon-categories')
-  createMealAddonCategory(@Param('brandId') brandId: string) {
+  async createMealAddonCategory(
+    @Param('brandId', new ParseUUIDPipe()) brandId: string,
+  ) {
     return {
       brandId,
       message: 'addon category created',

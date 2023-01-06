@@ -1,4 +1,4 @@
-import { ROLES } from 'src/core/constants/role.enum';
+import { ROLES } from '../../core/constants/role.enum';
 import { BaseModel } from './base.model';
 
 export class User extends BaseModel {

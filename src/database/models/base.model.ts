@@ -5,7 +5,7 @@ export class BaseModel extends Model {
   readonly createdAt: Date;
   updatedAt: Date;
 
-  $beforeSave() {
+  $beforeUpdate() {
     this.updatedAt = new Date();
   }
 }
