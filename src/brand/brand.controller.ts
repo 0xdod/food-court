@@ -7,10 +7,17 @@ import {
   ParseUUIDPipe,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { BrandService } from './brand.service';
-import { CreateBrandDTO, CreateMealAddonDTO, UpdateMealAddonDTO } from './dtos';
+import {
+  CreateBrandCategoryDTO,
+  CreateBrandDTO,
+  CreateMealAddonDTO,
+  UpdateMealAddonDTO,
+} from './dtos';
 
 @ApiTags('Brand Controller')
 @Controller('brands')
@@ -18,16 +25,22 @@ export class BrandController {
   constructor(private readonly brandService: BrandService) {}
 
   @Post()
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   async createBrand(@Body() createBrandDto: CreateBrandDTO) {
     return this.brandService.createBrand(createBrandDto);
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   async getBrands() {
     return this.brandService.getBrands();
   }
 
   @Post(':brandId/addons')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   async createMealAddon(
     @Param('brandId', new ParseUUIDPipe()) brandId: string,
     @Body() createMealAddonDto: CreateMealAddonDTO,
@@ -39,11 +52,15 @@ export class BrandController {
   }
 
   @Get(':brandId/addons')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   async getMealAddons(@Param('brandId', new ParseUUIDPipe()) brandId: string) {
     return this.brandService.findAllBrandMealAddons(brandId);
   }
 
   @Get(':brandId/addons/:addonId')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   async getMealAddonById(
     @Param('brandId', new ParseUUIDPipe()) brandId: string,
     @Param('addonId', new ParseUUIDPipe()) addonId: string,
@@ -52,6 +69,8 @@ export class BrandController {
   }
 
   @Patch(':brandId/addons/:addonId')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   async updateMealAddonById(
     @Param('brandId', new ParseUUIDPipe()) brandId: string,
     @Param('addonId', new ParseUUIDPipe()) addonId: string,
@@ -65,6 +84,8 @@ export class BrandController {
   }
 
   @Delete(':brandId/addons/:addonId')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   async deleteMealAddonById(
     @Param('brandId', new ParseUUIDPipe()) brandId: string,
     @Param('addonId', new ParseUUIDPipe()) addonId: string,
@@ -73,12 +94,15 @@ export class BrandController {
   }
 
   @Post(':brandId/addon-categories')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   async createMealAddonCategory(
     @Param('brandId', new ParseUUIDPipe()) brandId: string,
+    @Body() createBrandCategoryDto: CreateBrandCategoryDTO,
   ) {
-    return {
+    return this.brandService.createBrandCategory(
       brandId,
-      message: 'addon category created',
-    };
+      createBrandCategoryDto,
+    );
   }
 }

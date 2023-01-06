@@ -1,8 +1,9 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { ModelClass } from 'objection';
-import { Brand, MealAddon } from '../database/models';
+import { Brand, Category, MealAddon } from '../database/models';
 import {
   BrandDTO,
+  CreateBrandCategoryDTO,
   CreateBrandDTO,
   CreateMealAddonDTO,
   MealAddonDTO,
@@ -16,6 +17,8 @@ export class BrandService {
     private readonly mealAddonModel: ModelClass<MealAddon>,
     @Inject(Brand.name)
     private readonly brandModel: ModelClass<Brand>,
+    @Inject(Category.name)
+    private readonly categoryModel: ModelClass<Category>,
   ) {}
 
   async createBrand(data: CreateBrandDTO): Promise<BrandDTO> {
@@ -81,6 +84,17 @@ export class BrandService {
     return this.mealAddonModel.query().delete().where({
       brandId,
       id,
+    });
+  }
+
+  async createBrandCategory(
+    brandId: string,
+    data: CreateBrandCategoryDTO,
+  ): Promise<any> {
+    const { name } = data;
+    return this.categoryModel.query().insert({
+      brandId,
+      name,
     });
   }
 }
