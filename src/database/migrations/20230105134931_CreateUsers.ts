@@ -1,4 +1,3 @@
-import { table } from 'console';
 import { Knex } from 'knex';
 import { ROLE } from '../../core/constants/role.enum';
 
