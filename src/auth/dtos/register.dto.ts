@@ -6,7 +6,7 @@ import {
   IsAlpha,
   Length,
 } from 'class-validator';
-import { ROLES } from '../../core/constants/role.enum';
+import { ROLE } from '../../core/constants/role.enum';
 
 export class RegisterDTO {
   @IsNotEmpty()
@@ -23,7 +23,7 @@ export class RegisterDTO {
   @IsAlpha()
   name: string;
 
-  @IsEnum(ROLES)
+  @IsEnum(ROLE)
   @IsNotEmpty()
-  role: ROLES;
+  role: ROLE;
 }

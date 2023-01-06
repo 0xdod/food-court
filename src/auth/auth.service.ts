@@ -55,7 +55,7 @@ export class AuthService {
       })
       .returning(['id', 'email', 'name', 'role']);
 
-    return;
+    return user;
   }
 
   private async hashPassword(password: string): Promise<string> {

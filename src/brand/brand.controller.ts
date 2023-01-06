@@ -10,7 +10,9 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { Roles } from 'src/auth/decorators/roles.decorator';
+import { ROLE } from 'src/core/constants/role.enum';
+import { JwtAuthGuard, RolesGuard } from '../auth/guards';
 import { BrandService } from './brand.service';
 import {
   CreateBrandCategoryDTO,
@@ -25,21 +27,24 @@ export class BrandController {
   constructor(private readonly brandService: BrandService) {}
 
   @Post()
-  @UseGuards(JwtAuthGuard)
+  @Roles(ROLE.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @ApiBearerAuth()
   async createBrand(@Body() createBrandDto: CreateBrandDTO) {
     return this.brandService.createBrand(createBrandDto);
   }
 
   @Get()
-  @UseGuards(JwtAuthGuard)
+  @Roles(ROLE.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @ApiBearerAuth()
   async getBrands() {
     return this.brandService.getBrands();
   }
 
   @Post(':brandId/addons')
-  @UseGuards(JwtAuthGuard)
+  @Roles(ROLE.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @ApiBearerAuth()
   async createMealAddon(
     @Param('brandId', new ParseUUIDPipe()) brandId: string,
@@ -52,14 +57,16 @@ export class BrandController {
   }
 
   @Get(':brandId/addons')
-  @UseGuards(JwtAuthGuard)
+  @Roles(ROLE.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @ApiBearerAuth()
   async getMealAddons(@Param('brandId', new ParseUUIDPipe()) brandId: string) {
     return this.brandService.findAllBrandMealAddons(brandId);
   }
 
   @Get(':brandId/addons/:addonId')
-  @UseGuards(JwtAuthGuard)
+  @Roles(ROLE.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @ApiBearerAuth()
   async getMealAddonById(
     @Param('brandId', new ParseUUIDPipe()) brandId: string,
@@ -69,7 +76,8 @@ export class BrandController {
   }
 
   @Patch(':brandId/addons/:addonId')
-  @UseGuards(JwtAuthGuard)
+  @Roles(ROLE.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @ApiBearerAuth()
   async updateMealAddonById(
     @Param('brandId', new ParseUUIDPipe()) brandId: string,
@@ -84,7 +92,8 @@ export class BrandController {
   }
 
   @Delete(':brandId/addons/:addonId')
-  @UseGuards(JwtAuthGuard)
+  @Roles(ROLE.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @ApiBearerAuth()
   async deleteMealAddonById(
     @Param('brandId', new ParseUUIDPipe()) brandId: string,
@@ -94,7 +103,8 @@ export class BrandController {
   }
 
   @Post(':brandId/addon-categories')
-  @UseGuards(JwtAuthGuard)
+  @Roles(ROLE.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @ApiBearerAuth()
   async createMealAddonCategory(
     @Param('brandId', new ParseUUIDPipe()) brandId: string,

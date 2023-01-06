@@ -1,4 +1,4 @@
-import { ROLES } from '../../core/constants/role.enum';
+import { ROLE } from '../../core/constants/role.enum';
 import { BaseModel } from './base.model';
 
 export class User extends BaseModel {
@@ -9,7 +9,7 @@ export class User extends BaseModel {
   name: string;
   email: string;
   password: string;
-  role: ROLES;
+  role: ROLE;
 
   $formatJson(json: any) {
     json = super.$formatJson(json);

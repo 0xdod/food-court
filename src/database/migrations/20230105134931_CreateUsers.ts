@@ -1,6 +1,6 @@
 import { table } from 'console';
 import { Knex } from 'knex';
-import { ROLES } from '../../core/constants/role.enum';
+import { ROLE } from '../../core/constants/role.enum';
 
 const tableName = 'users';
 
@@ -16,7 +16,7 @@ export async function up(knex: Knex) {
       t.string('email').notNullable().unique();
       t.string('password').notNullable();
       t.string('name').notNullable();
-      t.enum('role', [ROLES.ADMIN, ROLES.USER]).notNullable();
+      t.enum('role', [ROLE.ADMIN, ROLE.USER]).notNullable();
     });
 }
 
