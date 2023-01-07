@@ -2,8 +2,7 @@
 
 ## TASK
 
-You are building a backend API for a meal management application that allows users to create, read, update, and delete
-meal addons. The API should also allow users to create categories for these addons.
+You are building a backend API for a meal management application that allows users to create, read, update, and delete meal addons. The API should also allow users to create categories for these addons.
 The API should have the following endpoints:
 
 - POST /brands/:brandId/addons: Create a new meal addon for the specified brand.
@@ -35,4 +34,5 @@ the `/swagger` endpoint.
 Since the `brands/*` endpoints are protected you'd have to register as admin and login to access them.
 There is a `/auth/register` and `/auth/login` to provide authentication services.
 
-TODO: deploy app and add link.
+The deployed version can be tested via `https://food-court-api.onrender.com`
+and the swagger doc `https://food-court-api.onrender.com/swagger`
