@@ -29,10 +29,7 @@ The API should have the following endpoints:
 
 ## Note
 
-A swagger documentation is generated automatically and is accessible via
-the `/swagger` endpoint.
-Since the `brands/*` endpoints are protected you'd have to register as admin and login to access them.
-There is a `/auth/register` and `/auth/login` to provide authentication services.
-
-The deployed version can be tested via `https://food-court-api.onrender.com`
-and the swagger doc `https://food-court-api.onrender.com/swagger`
+- A swagger documentation is generated automatically and is accessible via
+  the `/swagger` endpoint.
+- Since the `brands/*` endpoints are protected you'd have to register as admin and login to access them. There is a `/auth/register` and `/auth/login` to provide authentication services.
+- The deployed version can be accessed via [https://food-court-api.onrender.com] and the swagger doc [https://food-court-api.onrender.com/swagger]
